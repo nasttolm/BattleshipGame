@@ -33,18 +33,24 @@ public class Board {
 //        getSquare(5, 3).setShip(s);
 //    }
 
-//    /** Hardcoded bombs **/
-//    public boolean dropBomb(final int x, final int y) {
-//        Square square = getSquare(x, y);
-//        if (!square.getTried()){
-//            square.setTried();
-//            return square.isHit();
-//        } else {
-//            // to/do
-//            return false;
-//        }
-//    }
-//
+    /** Hardcoded bombs **/
+    public boolean dropBomb(final int x, final int y) {
+        Square square = getSquare(x, y);
+        if (!square.getTried()){
+            square.setTried();
+            if (square.isHit()){
+                if (square.getShip().isSunk()){
+                    System.out.println(square.getShip().getName() + " SUNK!");
+                }
+                return true;
+            }else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public Board(int height, int width) {
         this.height = height;
         this.width = width;
@@ -55,6 +61,12 @@ public class Board {
             for (int j = 0; j < row.length; j++){
                 row[j] = new Square();
             }
+        }
+    }
+
+    public void setup(Fleet fleet){
+        for(Ship s : fleet.getShips()){
+            placeShip(s);
         }
     }
 
@@ -96,12 +108,9 @@ public class Board {
                 }
                 breakCount++;
             }
-            if (collision){
-                throw new FailedToPlaceShipException();
-            }
-            ship.addToBoard(this);
-            ships.add(ship);
         }
+        ship.addToBoard(this);
+        ships.add(ship);
 
     }
 

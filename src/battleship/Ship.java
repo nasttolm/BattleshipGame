@@ -9,6 +9,7 @@ public class Ship {
     private final String code;
 
     private int squareCounter;
+    private int hitCounter;
 
     private int x;
     private int y;
@@ -60,6 +61,17 @@ public class Ship {
         } else{
             return this.squareCounter;
         }
+    }
+
+    public boolean incrementHitCounter(){
+        if (this.hitCounter < this.squareCounter){
+            this.hitCounter++;
+        }
+        return (this.hitCounter == this.squareCounter);
+    }
+
+    public boolean isSunk(){
+        return (this.hitCounter == this.squareCounter);
     }
 
     public boolean overlaps(Ship other){
