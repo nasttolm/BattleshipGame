@@ -3,18 +3,16 @@ package battleship;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class Ship {
+public abstract class Ship {
 
     private final String name;
     private final String code;
 
-    private int squareCounter;
+    protected int squareCounter;
     private int hitCounter;
 
-    private int x;
-    private int y;
-
-    private boolean horizontal;
+    protected int x;
+    protected int y;
 
     public Ship(String name, String code, int squareCounter){
         this.name = name;
@@ -43,25 +41,11 @@ public class Ship {
         this.y = y;
     }
 
-    public void rotate(){
-        this.horizontal = !this.horizontal;
-    }
+    public abstract void rotate();
 
-    public int getWidth(){
-        if(this.horizontal){
-            return this.squareCounter;
-        } else {
-            return 1;
-        }
-    }
+    public abstract int getWidth();
 
-    public int getHeight(){
-        if(this.horizontal){
-            return 1;
-        } else{
-            return this.squareCounter;
-        }
-    }
+    public abstract int getHeight();
 
     public boolean incrementHitCounter(){
         if (this.hitCounter < this.squareCounter){
@@ -81,32 +65,7 @@ public class Ship {
         return (intersection.getWidth() >= 0) && (intersection.getHeight() >= 0);
     }
 
-    public void addToBoard(final Board board){
-        if (this.horizontal){
-            for(int x = 0; x < this.squareCounter; x++){
-                board.getSquare(x + this.x, this.y).setShip(this);
-            }
-        } else {
-            for(int y = 0; y < this.squareCounter; y++){
-                board.getSquare(this.x, y + this.y).setShip(this);
-            }
-        }
-    }
+    public abstract void addToBoard(final Board board);
 
-    @Override
-    public String toString(){
-        final StringBuilder builder = new StringBuilder();
-        if(this.horizontal){
-            for(int x = 0; x < this.squareCounter; x++){
-                builder.append("O");
-            }
-            builder.append("\n");
-        } else {
-            for(int y = 0; y < this.squareCounter; y++){
-                builder.append("O\n");
-            }
-        }
-        return builder.toString();
-    }
 
 }
