@@ -33,21 +33,36 @@ public class Board {
 //        getSquare(5, 3).setShip(s);
 //    }
 
-    /** Hardcoded bombs **/
-    public boolean dropBomb(final int x, final int y) {
+    /**
+     * Bombs the given square and returns an Outcome object that tells if any ship
+     * was hit, and if so if it was sunk, and if so whether that ends the game or not.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    public Outcome dropBomb(final int x, final int y) {
         Square square = getSquare(x, y);
-        if (!square.getTried()){
-            square.setTried();
-            if (square.isHit()){
-                if (square.getShip().isSunk()){
-                    System.out.println(square.getShip().getName() + " SUNK!");
+        if (!square.getTried()) {
+            square.setTried(true);
+            Ship sunkShip = null;
+            boolean gameWon = false;
+            if (square.isHit()) {
+                if (square.getShip().isSunk()) {
+                    sunkShip = square.getShip();
+                    gameWon = true;
+                    for(Ship ship : this.ships) {
+                        if (!ship.isSunk()) {
+                            gameWon = false;
+                            break;
+                        }
+                    }
                 }
-                return true;
-            }else {
-                return false;
             }
+            return new Outcome(x, y, square.isHit(), sunkShip, gameWon);
         } else {
-            return false;
+            // this is a wasted turn - perhaps an exception would be a better idea?
+            throw new IllegalStateException("Square already played!");
         }
     }
 

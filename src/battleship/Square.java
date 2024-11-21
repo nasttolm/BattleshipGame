@@ -17,7 +17,7 @@ public class Square {
         return this.tried;
     }
 
-    public void setTried() {
+    public void setTried(boolean b) {
         this.tried = true;
         if(this.ship != null) {
             this.ship.incrementHitCounter();
