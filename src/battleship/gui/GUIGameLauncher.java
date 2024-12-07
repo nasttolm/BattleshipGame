@@ -1,6 +1,7 @@
 package battleship.gui;
 
 import battleship.*;
+import battleship.strategy.*;
 
 import javax.swing.*;
 
@@ -11,8 +12,8 @@ public class GUIGameLauncher {
         //Board[] boards = BoardFactory.getTinyBoards();
         GUIPlayer player1 = null;
         GUIPlayer player2 = null;
-        final ComputerPlayerStrategy strategy1 = new RandomStrategy();
-        final ComputerPlayerStrategy strategy2 = new RandomStrategy();
+        final ComputerPlayerStrategy strategy1 = new BetterStrategy();
+        final ComputerPlayerStrategy strategy2 = new BetterStrategyWithDoubleRun();
         final GameType gameType = GameType.HUMAN_V_COMPUTER;
         switch(gameType) {
             case COMPUTER_V_COMPUTER:

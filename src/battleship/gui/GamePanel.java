@@ -21,6 +21,8 @@ public class GamePanel extends JPanel {
 
     private State state = State.WAITING_TO_START;
 
+    private int[] tally = new int[] { 0, 0 };
+
     public GamePanel(final AbstractGame game) {
         super(new BorderLayout());
         setGame(game);
@@ -131,6 +133,14 @@ public class GamePanel extends JPanel {
                     this.state = State.GAME_OVER;
                     this.controlButton.setText("New game");
                     this.controlButton.setEnabled(true);
+
+                    if (bomber == this.game.getPlayer1()) {
+                        this.tally[0]++;
+                    } else {
+                        this.tally[1]++;
+                    }
+                    System.out.println( "p1 won " + this.tally[0] + " p2 won " + this.tally[1]);
+
                 } else {
                     this.messageLabel.setText("HIT and " + s.getName() + " destroyed!");
                 }
